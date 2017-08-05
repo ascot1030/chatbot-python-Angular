@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Profile{% endblock meta_title %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/profile.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small page-profile{% endblock body_class %}
+
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+  <!-- Page -->
+  <div class="page animsition">
+    <div class="page-content container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Page Widget -->
+          <div class="widget widget-shadow text-center">
+            <div class="widget-header">
+              <div class="widget-header-content">
+                {% if user %}
+                <a class="avatar avatar-lg" href="javascript:void(0)">
+                  {% if user.avatar %}
+                  <img src='{{ user.avatar.url }}' alt="{{ user.get_full_name|default:user.username }}">
+                  {% else %}
+                  <img src='{% static "global/portraits/default.jpg" %}' alt="No Avatar">
+                  {% endif %}
+                </a>
+                <h4 class="profile-user">{{ user.get_full_name|default:user.username }}</h4>
+                <p class="profile-job">{{ user.job }}</p>
+                <p>{{ user.about_me }}</p>
+                <p>
+                  <i class="icon icon-color wb-map" aria-hidden="true"></i> {{ user.location }}
+                </p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="widget-footer">
+              <div class="row no-space">
+                <div class="col-xs-6">
+                  <strong class="profile-stat-count">{{ rooms_count }}</strong>
+                  <span>Chats</span>
+                </div>
+                <div class="col-xs-6">
+                  <strong class="profile-stat-count">{{ messages_count }}</strong>
+                  <span>Messages</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Widget -->
+        </div>
+        <div class="col-md-9">
+          <!-- Panel -->
+          <div class="panel">
+            <div class="panel-body nav-tabs-animate">
+              <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
+                <li class="active" role="presentation"><a data-toggle="tab" href="#activities" aria-controls="activities"
+                  role="tab">Payment History </a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active animation-slide-left" id="activities" role="tabpanel">
+
+                  <div class="page-invoice-table table-responsive">
+                    <table class="table table-hover text-right">
+                      <thead>
+                        <tr>
+                          <th class="text-center">#</th>
+                          <th>Description</th>
+                          <th class="text-right">Payment date</th>
+                          <th class="text-right">Plan</th>
+                          <th class="text-right">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for payment in payments %}
+                        <tr>
+                          <td class="text-center">
+                            {{ forloop.counter }}
+                          </td>
+                          <td class="text-left">
+                            Monthly Subscription
+                          </td>
+                          <td>{{ payment.created_at }}</td>
+                          <td>
+                            Standard
+                          </td>
+                          <td>
+                            ${{ payment.amount }}
+                          </td>
+                        </tr>
+                       {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+{#                  <a class="btn btn-block btn-default profile-readMore" href="{% url 'payments:update_card' %}"#}
+{#                  role="button">Change your payment information</a>#}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Panel -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-3">
+          <!-- Page Widget -->
+          <div class="widget widget-shadow text-center">
+            <div class="widget-header">
+              <div class="widget-header-content">
+
+            <div class="panel-heading">
+              <h3 class="panel-title">Active Plan: {{ user.get_plan_display }}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="wizard-pane" id="exampleBillingOne" role="tabpanel">
+                {% if paid_period_expires_at %}
+                <p>Your subscription is valid until {{ paid_period_expires_at }}</p>
+                {% endif %} {% if user.paid_at %}
+                <p>Your card will be automatically processed on <b>{{ user.next_pay_day }}</b></p>
+                <p>Last payment date: {{ user.paid_at }}</p>
+                <p>{{ user.card_type }} xxxx-xxxx-xxxx-{{ user.card_last }}</p>
+                {% endif %}
+                {% if status == 200 %}
+                <p>Active credit card: {{ user.card_type }} xxxx-xxxx-xxxx-{{ user.card_last }}</p>
+
+                <p>Your card will be charged with ${{ standard_price }}</p>
+                {% else %}
+                <div class="alert alert-alt alert-info alert-dismissible" role="alert">
+                  You can <a href="{% url 'payments:update_card' %}">change your payment information</a>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+              </div>
+            </div>
+            <div class="widget-footer">
+              <div class="row no-space">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Widget -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Page -->
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}

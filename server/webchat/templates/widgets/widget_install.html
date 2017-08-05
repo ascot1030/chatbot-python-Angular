@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Widget Install{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/statistics.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small app-message{% endblock body_class %}
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+  <!-- Page -->
+  <div class="page animsition">
+    <div class="page-header">
+      <h1 class="page-title">Widget Install</h1>
+    </div>
+    <div class="page-content container-fluid">
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Install Apartment Ocean Chat on Your Website</h3>
+        </div>
+        <div class="panel-body container-fluid">
+          <div class="row row-sm">
+            <div class="col-sm-8">
+              <h4 class="example-title">Step 1: Copy and paste this code snippet</h4>
+              <p>Place this code snippet on your website before the closing <code>&lt;&frasl;body&gt;</code> tag on pages you'd like it to appear.
+              </p>
+              <!-- Code Snippet -->
+              <textarea class="form-control text-break" id="snippet" rows="2" readonly>
+                {% include "widgets/widget_snippet.html" with widget=widget %}
+              </textarea>
+              <!-- End Code Snippet -->
+              <div class="text-right margin-top-20">
+                <button type="button" class="btn btn-outline btn-default" data-clipboard-target="#snippet">Copy</button>
+              </div>
+              <h4 class="example-title">Step 2: Verify your installation</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Options and Customization</h3>
+        </div>
+        <div class="panel-body container-fluid">
+          <div class="row row-sm">
+            <form method="post" action="{% url 'portal:widgets' %}" class="form-horizontal">
+              {% csrf_token %}
+              <div class="col-sm-12">
+                <h4 class="example-title">Domain restrictions</h4>
+                <p>Restrict the domain URL for this website to ensure the code snippet can not be used on other websites.
+                </p>
+              </div>
+              <div class="col-sm-8">
+                  {{ form.domain }}
+              </div>
+              <div class="col-sm-12 margin-top-20">
+                <h4 class="example-title">Greeting Message</h4>
+                <p>You can use <code>{username}</code> in greeting message.</p>
+              </div>
+              <div class="col-sm-8">
+                  {{ form.greeting_message }}
+              </div>
+              <div class="col-sm-8 text-right margin-top-20">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Page -->
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}
+
+{% block main_scripts %}
+<script src='{% static "assets/js/app.js" %}'></script>
+<script src='{% static "global/vendor/clipboard/clipboard.min.js" %}'></script>
+<!-- Instantiate clipboard -->
+<script>
+  var clipboard = new Clipboard('.btn', {
+    text: function(trigger) {
+      var target = $(trigger).data('clipboard-target');
+      return $(target).text().trim();
+    }
+  });
+</script>
+{% endblock main_scripts %}

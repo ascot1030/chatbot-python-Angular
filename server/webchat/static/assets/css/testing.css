@@ -1,0 +1,142 @@
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Lato', sans-serif !important;
+}
+
+body {
+  font-size: 14px;
+}
+
+code {
+  background: #f1f1f1 none repeat scroll 0 0;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  font-size: 90%;
+  margin: 0 0.2rem;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+
+.button a {
+  background: #009bdf none repeat scroll 0 0;
+  border-radius: 25px;
+  color: #fff;
+  display: block;
+  float: left;
+  line-height: 10px;
+  padding: 20px 0;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.button a:hover {
+  background-color: #23a9e4;
+}
+
+.button a:focus {
+  background-color: #0c81b4;
+}
+
+.btn-submit {
+  display: block;
+  float: right;
+  padding: 8px 0;
+  margin-top: 5px;
+  margin-right: 12px;
+  border: 1px solid #009bdf;
+  background-color: #009bdf;
+  color: #f4f6f8;
+  font-weight: 400;
+  line-height: 1;
+  width: 70px;
+  transition: all 0.3s ease-in-out 0s;
+  border-radius: 20px;
+}
+
+.quiet {
+  color: #999;
+  font-size: 0.9em;
+}
+
+.nickname-control {
+  margin-bottom: 20px;
+}
+
+.nickname-control label {
+  display: block;
+}
+
+.nickname-control input {
+  background-color: transparent;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
+.nickname-control input:focus {
+  border-color: #009bdf;
+}
+
+.chat-room-wrapper {
+  position: relative;
+  background-color: #fff;
+  color: #2d2e2d;
+  display: block;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.chat-room-wrapper .messages-room {
+  position: relative;
+  height: 150px;
+  font-size: 0.9em;
+  padding: 5px;
+}
+
+#chat {
+  position: absolute;
+  bottom: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.chat-room-wrapper .messages-room .chat-message {
+  /*float:right;*/
+  margin-top: 10px;
+  width: 60%;
+}
+
+.form-room .message-row {
+  margin-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+}
+
+hr {
+  position: absolute;
+  left: 0;
+  bottom: 120px;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+textarea.frm-control {
+  background-color: #fff;
+  border: 0 none;
+  height: 60px;
+  width: 100%;
+}
+
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}

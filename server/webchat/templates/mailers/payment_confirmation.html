@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+        @media (max-width:639px) {
+            section{width:100% !important;}
+            section > span{border-top:1px solid #ededed;  text-align:center !important;}
+        }
+    </style>
+    <link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body style="background-color: #f1f4f5;">
+<center>
+    <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%; border-collapse: collapse; max-width: 650px;">
+        <thead style="background-color:#62a8ea">
+        <tr>
+            <th style="padding: 5px 0px;"><img style="padding-left: 14px;" src="http://clikhome-stag-webchat-server.herokuapp.com/static/assets/images/logo_large.png"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--
+          <tr style="background-color:#fff">
+            <td>
+              <img style="width: 100%;" src="https://domain.com/static/email/images/banner-guest-welcome.png"/>
+            </td>
+          </tr>
+          <tr style="background-color: #fff; color: #76838f;">
+          -->
+        <td style="padding: 50px 0px; background-color:#fff">
+            <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                <tr>
+                    <th style="padding: 0px 44px; color: #76838f; font-size: 19px; font-weight: 500; letter-spacing: 0.87px; font-family: 'Lato', sans-serif; opacity: 0.8;">Hi {{ username }}!
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th style="color: #76838f; font-family: 'Lato', sans-serif; word-spacing: 0px; font-size: 15px; padding: 12px 13px 12px 44px; opacity: 0.8; line-height: 18px; font-weight: 500; letter-spacing: 0.36px;">
+                        <p>Your credit card has been processed for Monthly subscription:
+                        <a href="{{ url }}" target="_blank" style="color: #62a8ea; text-decoration:none;">transaction #{{ transaction_id }}</a> in the amount of ${{ cost }}.00</p>
+
+                        <p>Thank you for purchasing WebChat application! If you have any
+                        questions, please reply directly to this email. We look forward to
+                        working with you!</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="color: #76838f; font-family: 'Lato', sans-serif; word-spacing: 0px; font-size: 15px; padding: 12px 13px 12px 44px; opacity: 0.8; line-height: 18px; font-weight: 500; letter-spacing: 0.36px;">
+                        We are here to help and available 24 hours a day, 7 days a week. If you have any property access issues please call <span style="color:#89bceb;">(111) 111-1111</span> or email us at <a style="color:#89bceb; text-decoration: none;" target="_blank" href="mailto:support@domain.com">support@domain.com</a>.
+                    </th>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 44px 0px; font-family: 'Lato', sans-serif; color: #76838f; line-height: 19px;">Thanks! <br> <span style="font-weight:500">The ApartmentOcean Team</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        </tr>
+
+        <tr style="width:100%; background-color: #62a8ea;">
+            <td style="text-align: right; padding: 9px 0px;">
+                <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%; border-collapse: collapse; float: right; max-width: 156px;">
+                    <tbody>
+                    <tr>
+                        <td style="width: 30%; text-align: center;"></td>
+                        <td style="width: 30%; text-align: center;">
+                            <a target="_blank" href="https://www.facebook.com/domain"><img src="http://clikhome-stag-webchat-server.herokuapp.com/static/assets/images/facebook.png" style="width: 23px; margin-top: -5px; margin-left: 3px;"></a>
+                        </td>
+                        <td style="width: 30%; text-align: center;">
+                            <a target="_blank" href="https://twitter.com/domain"><img src="http://clikhome-stag-webchat-server.herokuapp.com/static/assets/images/twitter.png" style="width: 26px; margin-right: 9px; margin-top: -4px;"></a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr style="width:100%; background-color: #fff;">
+            <td style="padding: 17px 0px;">
+                <table cellspacing="0" cellpadding="0" width="100%" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 10px; color: rgb(153, 153, 153); font-family: 'Lato', sans-serif; letter-spacing: 0.2px;">
+                    <tbody>
+                    <tr>
+                        <td style="padding: 5px 0px;">
+                            &copy; ApartmentOcean 2016 All rights reserved
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px 0px;">
+                            <!-- New York City, USA -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            <a href="#" style="color: rgb(153, 153, 153); text-decoration: underline;">View this Email on your browser</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</center>
+</body>
+</html>

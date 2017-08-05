@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Make a payment{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/statistics.css" %}'>
+<link rel="stylesheet" href='{% static "assets/css/payments.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small app-message{% endblock body_class %}
+
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+<!-- Page -->
+<div class="page animsition">
+  <div class="page-header">
+    <h1 class="page-title">Pricing Plan</h1>
+  </div>
+  <div class="page-content container-fluid">
+    <div class="panel" id="exampleWizardFormContainer">
+      <div class="panel-heading">
+        <h3 class="panel-title">Choose your plan</h3>
+      </div>
+      <div class="panel-body container-fluid">
+        <!-- Example Pricing List -->
+        <div class="example-wrap">
+          <div class="example">
+            <div class="row">
+              <div class="col-sm-6 col-lg-4 col-lg-offset-2">
+                <div class="pricing-list">
+                  <div class="pricing-header">
+                    <div class="pricing-title bg-blue-600">
+                    {% if has_coupon %}
+                      <div class="ribbon ribbon-clip ribbon-warning coupon">
+                        <span class="ribbon-inner">discount</span>
+                      </div>
+                    {% endif %}
+                        Standard</div>
+                    <div class="pricing-price">
+                      <span class="pricing-currency blue-600">$</span>
+                      <span class="pricing-amount blue-600">{{ standard_price }}</span>
+                      <span class="pricing-period">/ mo</span>
+                    </div>
+                  </div>
+                  <ul class="pricing-features">
+                    <li>
+                      Easy To Install Chat Button</li>
+                    <li>
+                      Automatically receive requests from website visitors</li>
+                    <li>
+                      Generate customizable automated responses to customer’s questions</li>
+                    <li>
+                      Call joining so an agent can join the conversation at any time</li>
+                    <li>
+                      Our Proprietary Customer Conversation Management System</li>
+                  </ul>
+                  <div class="pricing-footer">
+
+                    {% if status == 200 or status == 403 %}
+                        <a {% if invalid_card %}href="{% url 'payments:make_quick_payment' %}"{% endif %} class="btn btn-primary btn-outline {% if not invalid_card %}submit_payment{% endif %}" id="join_button" role="button"><i class="icon wb-arrow-right font-size-16 margin-right-15" aria-hidden="true"></i>First Month Free! Join Now!</a>
+
+                            {% if not has_coupon %}
+                        <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
+                          <div class="panel">
+                            <div class="panel-heading" id="exampleHeadingDefaultOne" role="tab">
+                              <a class="panel-title" data-toggle="collapse" href="#exampleCollapseDefaultOne" data-parent="#exampleAccordionDefault" aria-expanded="true" aria-controls="exampleCollapseDefaultOne">
+                                                Do you have a coupon?
+                                            </a>
+                            </div>
+                            <div class="panel-collapse collapse" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel">
+                              <div class="panel-body">
+                                <div class="form-group has-feedback" id="coupon_form">
+                                  <div class="row">
+                                    <small class="control-label red-600" id="error_message" style="display: none">
+                                                            Sorry this code is invalid or expired :(
+                                                        </small>
+                                    <form action="{% url 'payments:check_coupon' %}" method="post">
+                                      {% csrf_token %}
+                                      <div>
+                                        <input type="text" class="form-control" id="id_coupon_number" aria-describedby="inputErrorStatus" name="coupon_number" autocomplete="off">
+                                        <span class="form-control-feedback" aria-hidden="true"></span>
+                                        <span class="sr-only" id="inputErrorStatus">(error)</span>
+                                        <button type="submit" onclick="return false" id="coupon_submit" class="btn btn-outline btn-default btn-xs">Use Coupon</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% endif %}
+
+                    {% else %}
+                    <a class="btn btn-primary btn-outline bg-blue-600" role="button"><i class="icon wb-check-circle font-size-16 margin-right-15" aria-hidden="true"></i>Your Current Plan</a>
+                    {% endif %}
+                    <div class="alert alert-alt alert-danger alert-dismissible"
+                         role="alert" id="error_msg" style="display: none">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <p id="msg"></p>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="pricing-list">
+                  <div class="pricing-header">
+                    <div class="pricing-title bg-green-600">Custom</div>
+                  </div>
+                  <ul class="pricing-features">
+                    <li>Customized Chat Button</li>
+                    <li>Automatically receive requests from website visitors</li>
+                    <li>Generate customizable automated responses to customer’s questions</li>
+                    <li>Call joining so an agent can join the conversation at any time</li>
+                    <li>Our Proprietary Customer Conversation Management System</li>
+                    <li></li>
+                  </ul>
+                  <span>And Also Receive These <strong>BONUS</strong> Features:</span>
+                  <ul class="pricing-features">
+                    <li></li>
+                    <li>Automated Lead Creation</li>
+                    <li>Customized Admin Portal</li>
+                    <li>Easy management and distribution of leads</li>
+                    <li>Customized questions Customized Artificial Intelligence responses</li>
+                  </ul>
+                  <div class="pricing-footer" style="padding: 18px 0;">
+                    <a href="{% url 'portal:feedback' %}" class="btn btn-primary btn-outline" role="button"><i class="icon wb-arrow-right font-size-16 margin-right-15" aria-hidden="true"></i>Contact Us Today For A Free <br>Customized Plan For Your Business</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Example Pricing List -->
+          <div style="display: none;">
+              <form action="{% url 'payments:make_payment_api' %}" id="make_payment_api_form" method="post">
+                  {% csrf_token %}
+
+                  <button onclick="return false" type="submit" class="btn btn-animate btn-animate-side btn-primary submit_payment">
+                      <span><i class="icon wb-shopping-cart" aria-hidden="true"></i> Activate Standard Plan</span>
+                  </button>
+              </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page -->
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}
+
+{% block main_scripts %}
+<script src='{% static "assets/js/app.js" %}'></script>
+<script type="text/javascript">
+  var frm = $('#make_payment_api_form');
+  var btn = $('.submit_payment');
+  var wait_msg = $('#wait_msg');
+  var join_button = $('#join_button');
+
+  btn.on('click', function() {
+    btn.css('opacity', 0.8).prop('disabled', true);
+    join_button.css('opacity', 0.8).prop('disabled', true);
+    join_button.prop('disabled', true).addClass('bg-orange-600').text('Processing ...');
+    wait_msg.fadeIn();
+
+    $.ajax({
+      type: frm.attr('method'),
+      url: frm.attr('action'),
+      data: frm.serialize(),
+      success: function(data) {
+        if (data.status) {
+          wait_msg.fadeOut('fast');
+          $('#success_msg').fadeIn();
+          join_button.removeClass('bg-orange-600').addClass('bg-green-600').text('Success! Thank you!');
+          setTimeout(location.reload.bind(location), 2000);
+        } else {
+          wait_msg.fadeOut('fast');
+            join_button.removeClass('bg-orange-600').addClass('bg-red-600').text('Error during authorization');
+          $('#error_msg').fadeIn();
+          $('#msg').text(data.msg);
+        }
+      }
+    });
+  });
+
+  var coupon_form = $('#coupon_form');
+  var coupon_submit = $('#coupon_submit');
+  coupon_submit.on('click', function () {
+    $.ajax({
+      type: 'POST',
+      url: {% url 'payments:check_coupon' %},
+      data: {'coupon_number': $('#id_coupon_number').val()},
+      success: function(data) {
+        if (data.success) {
+            $('#error_message').fadeOut();
+            coupon_form.removeClass('has-error');
+            coupon_form.addClass('has-success');
+            coupon_submit.removeClass('btn-default').addClass('btn-success');
+            coupon_submit.text('Thanks! Your code is accepted.');
+            setTimeout(location.reload.bind(location), 1000);
+        } else {
+            coupon_form.addClass('has-error');
+            $('#error_message').fadeIn();
+        }
+      }
+    });
+  });
+</script>
+{% endblock main_scripts %}

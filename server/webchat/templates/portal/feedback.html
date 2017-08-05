@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Feedback{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/login.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}page-login layout-full{% endblock body_class %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content vertical-align-middle">
+      <div class="brand">
+        <img class="brand-img" src='{% static "assets/images/logo.png" %}' alt="...">
+        <h2 class="brand-text">Apartment Ocean</h2>
+      </div>
+      <p>Feel free to send us a message</p>
+      <form method="post" role="form" action=".">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-error has-error">
+          <p class="control-label">Please check these fields and try again:</p>
+          <ul class="list-unstyled">
+            {% for error in form.errors %}
+              <li class="control-label">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="form-group">
+          <label class="sr-only" for="inputName">First Name</label>
+          <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="Your First Name">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputName">Last Name</label>
+          <input type="text" class="form-control" id="inputLastName" name="last_name" placeholder="Last Name">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail1" name="email1" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputEmail">Retype Email</label>
+          <input type="email" class="form-control" id="inputEmail2" name="email2" placeholder="Please Retype Email">
+          <i style="color: #f96868">{{ form.email2.errors.as_text }}</i>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputEmail">Message</label>
+          <textarea class="maxlength-textarea form-control" data-plugin="maxlength" data-placement="bottom-right-inside" maxlength="500" rows="3" placeholder="Your message" name="body"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send</button>
+      </form>
+    </div>
+  </div>
+  {% include "main_footer.html" %}
+</div>
+
+{% endblock content %}

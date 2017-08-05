@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<p class="time">Last 10 messages</p>
+{% for message in messages %}
+<div class="chat{% if not message.is_support_sender %} chat-left{% endif %}">
+  <div class="chat-avatar" {% ifchanged message.nickname %}{% else %}style="display: none;" {% endifchanged %}>
+    <a class="avatar avatar-online" data-toggle="tooltip" href="#" data-placement="right" title="">
+      {% if message.sender.user.avatar %}
+      <img src='{{ message.sender.user.avatar.url }}' alt="{{ message.sender.get_full_name|default:message.sender.username }}">
+      {% else %}
+      <img src='{% static "global/portraits/default.jpg" %}' alt="No Avatar">
+      {% endif %}
+      <i></i>
+    </a>
+    <div class="message-info">
+      <h5>{% if message.sender %}{{ message.sender }}{% else %}{{ message.nickname }}{% endif %}</h5>
+    </div>
+  </div>
+  <div class="chat-body"
+    {% ifchanged message.nickname %}
+      {% if message.room.owner == request.user and message.sender == request.user %}
+      {% else %}
+        style="margin-top: 70px;"
+      {% endif %}
+    {% else %}
+      style="margin: 0 60px;"
+    {% endifchanged %}>
+    <div class="chat-content {% ifchanged message.nickname %}{% else %}no-before{% endifchanged %}">
+      <p>
+        {{ message.body }}
+      </p>
+      <time datetime="{{ message.sent_at|date:'Y-m-d\TH:i' }}" class="message-time">{{ message.formatted_sent_at_time }}</time>
+    </div>
+  </div>
+</div>
+{% endfor %}
+

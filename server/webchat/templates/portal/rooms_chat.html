@@ -1,0 +1,62 @@
+{% load portal_tags %}
+{% load humanize %}
+{% if not rooms %}
+<div class="no-items">You have no Chats</div>
+  <button style="display: none" class="btn btn-primary" id="openTutorialModal" data-target="#exampleFillIn" data-toggle="modal"
+  type="button">Generate</button>
+
+  <div class="modal fade modal-fill-in" id="exampleFillIn" aria-hidden="false" aria-labelledby="exampleFillIn"
+  role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #fff;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h5 class="modal-title example-title" id="exampleFillInModalTitle">To start using WebChat bot, you need to add
+          the installation code to your website</h5>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <h5>Copy and paste this code snippet</h5>
+                Place this code snippet on your website before the closing <code>&lt;&frasl;body&gt;</code> tag on pages you'd like it to appear.
+
+              <textarea class="form-control text-break" id="snippet" rows="2" readonly>
+                {% include "widgets/widget_snippet.html" %}
+              </textarea>
+              <div class="text-right margin-top-20">
+                <button type="button" class="btn btn-outline btn-default btn-sm" data-clipboard-target="#snippet">Copy</button>
+              </div>
+              <h5>You can also customize your widget by setting custom <code>{username}</code> and verify your installation</h5>
+              <a href="{% url 'portal:widgets' %}" class="btn btn-outline btn-default btn-sm">Customize</a>
+              </div>
+              </div>
+        </div>
+      </div>
+            <a class="text-right small" data-dismiss="modal" href="" id="disable_widget_tip">I'll do it later...</a>
+
+    </div>
+  </div>
+{% endif %}
+{% for room in rooms %}
+<li class="list-group-item{% if forloop.first %} active{% endif %}" data-label="{{ room.label }}" data-name="{{ room.name }}">
+  <div class="media">
+    <div class="media-left">
+      <a class="avatar avatar-online" href="javascript:void(0)">
+        <svg width="40" height="40" viewBox="0 0 40 40" data-jdenticon-hash="{{ room.label|md5 }}"></svg>
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{ room.name }}</h4>
+      <span class="media-time">{{ room.created_at|naturaltime }}</span>
+    </div>
+    <div class="media-right">
+      <span class="badge badge-default">{{ room.messages.count }}</span>
+      <div class="item-actions">
+        <span class="btn btn-pure btn-icon" data-tag="list-delete"><i class="icon wb-trash" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</li>
+{% endfor %}

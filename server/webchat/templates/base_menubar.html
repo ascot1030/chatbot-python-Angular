@@ -1,0 +1,56 @@
+<div class="site-menubar">
+  <ul class="site-menu">
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'portal:home' %}">
+        <i class="site-menu-icon wb-home" aria-hidden="true"></i>
+        <span class="site-menu-title">Home</span>
+      </a>
+    </li>
+    <li class="site-menu-item has-sub">
+      <a href="javascript:void(0)">
+        <i class="site-menu-icon wb-user-circle" aria-hidden="true"></i>
+        <span class="site-menu-title">My Account</span>
+        <span class="site-menu-arrow"></span>
+      </a>
+      <ul class="site-menu-sub">
+        <li class="site-menu-item">
+          <a class="animsition-link" href="{% url 'users:detail' request.user.username %}">
+            <span class="site-menu-title">Profile</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    {% if request.user.is_superuser %}
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'admin:index' %}">
+        <i class="site-menu-icon wb-wrench" aria-hidden="true"></i>
+        <span class="site-menu-title">Admin Panel</span>
+      </a>
+    </li>
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'users:list' %}">
+        <i class="site-menu-icon wb-users" aria-hidden="true"></i>
+        <span class="site-menu-title">Users</span>
+      </a>
+    </li>
+    {% endif %}
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'portal:statistics' %}">
+        <i class="site-menu-icon wb-stats-bars" aria-hidden="true"></i>
+        <span class="site-menu-title">Statistics</span>
+      </a>
+    </li>
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'portal:widgets' %}">
+        <i class="site-menu-icon wb-share" aria-hidden="true"></i>
+        <span class="site-menu-title">Widget Install</span>
+      </a>
+    </li>
+    <li class="site-menu-item">
+      <a class="animsition-link" href="{% url 'payments:make_payment' %}">
+        <i class="site-menu-icon wb-payment" aria-hidden="true"></i>
+        <span class="site-menu-title">Pricing Plan</span>
+      </a>
+    </li>
+  </ul>
+</div>

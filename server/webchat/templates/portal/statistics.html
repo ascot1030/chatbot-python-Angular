@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Statistics{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/statistics.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small app-message{% endblock body_class %}
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+  <!-- Page -->
+  <div class="page animsition">
+    <div class="page-header">
+      <h1 class="page-title">Statistics</h1>
+    </div>
+    <div class="page-content container-fluid">
+      <div class="row">
+        <div class="clearfix visible-lg-block"></div>
+        <div class="col-sm-4">
+          <!-- Widget -->
+          <div class="widget">
+            <div class="widget-content padding-30 bg-blue-600">
+              <div class="widget-watermark darker font-size-60 margin-15"><i class="icon wb-chat-group" aria-hidden="true"></i></div>
+              <div class="counter counter-md counter-inverse text-left">
+                <div class="counter-number-group">
+                  <span class="counter-number">{{ total_rooms }}</span>
+                  <span class="counter-number-related text-capitalize">Chats</span>
+                </div>
+                <div class="counter-label">We received in Chat Portal</div>
+              </div>
+            </div>
+          </div>
+          <!-- End Widget -->
+        </div>
+        <div class="col-sm-4">
+          <!-- Widget -->
+          <div class="widget">
+            <div class="widget-content padding-30 bg-red-600">
+              <div class="widget-watermark darker font-size-60 margin-15"><i class="icon wb-envelope" aria-hidden="true"></i></div>
+              <div class="counter counter-md counter-inverse text-left">
+                <div class="counter-number-group">
+                  <span class="counter-number">{{ total_messages }}</span>
+                  <span class="counter-number-related text-capitalize">Messages</span>
+                </div>
+                <div class="counter-label">We received in Chats</div>
+              </div>
+            </div>
+          </div>
+          <!-- End Widget -->
+        </div>
+        {% if request.user.is_superuser or request.user.is_staff %}
+        <div class="col-sm-4">
+          <!-- Widget -->
+          <div class="widget">
+            <div class="widget-content padding-30 bg-purple-600">
+              <div class="widget-watermark darker font-size-60 margin-15"><i class="icon wb-users" aria-hidden="true"></i></div>
+              <div class="counter counter-md counter-inverse text-left">
+                <div class="counter-number-group">
+                  <span class="counter-number">{{ total_users }}</span>
+                  <span class="counter-number-related text-capitalize">Users</span>
+                </div>
+                <div class="counter-label text-capitalize">in Chat Portal</div>
+              </div>
+            </div>
+          </div>
+          <!-- End Widget -->
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!-- End Page -->
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}
+
+{% block main_scripts %}
+<script src='{% static "assets/js/app.js" %}'></script>
+{% endblock main_scripts %}

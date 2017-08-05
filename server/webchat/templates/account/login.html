@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Login{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/login.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}page-login layout-full{% endblock body_class %}
+
+{% block content %}
+
+<div class="container">
+  {% include "main_header.html" %}
+  <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content vertical-align-middle">
+      <div class="brand">
+        <h2 class="brand-text">SIGN IN</h2>
+      </div>
+      <p>Not yet registered? <a href="{{ signup_url }}">Sign up!</a></p>
+      <form method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-error has-error">
+          {% for error in form.non_field_errors %}
+            <p class="control-label">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="form-group">
+          <label class="sr-only" for="inputUsername">Username</label>
+          <input type="text" class="form-control" id="inputUsername" name="login" placeholder="Email address or Username">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputPassword">Password</label>
+          <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" maxlength="20">
+          <a class="pull-right forgot-pass" href="{% url 'account_reset_password' %}">Forgot?</a>
+        </div>
+        <div class="form-group clearfix margin-top-15 margin-bottom-25">
+          <div class="pull-left">
+            <input type="checkbox" id="inputCheckbox" class="js-switch" name="remember">
+            <label for="inputCheckbox">Keep me logged in</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Sign in</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+  </div>
+  {% include "main_footer.html" %}
+</div>
+{% endblock content %}
+
+{% block main_scripts %}
+<script type="text/javascript" src='{% static "assets/js/login_template.js" %}'></script>
+{% endblock main_scripts %}

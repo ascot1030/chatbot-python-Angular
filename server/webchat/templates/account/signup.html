@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Register{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/register.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}page-register layout-full{% endblock body_class %}
+
+{% block content %}
+<div class="container">
+  {% include "main_header.html" %}
+  <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content vertical-align-middle">
+      <div class="brand">
+        <h2 class="brand-text">SIGN UP</h2>
+      </div>
+      <p>Already have an account? <a href="{% url 'account_login' %}">Sign in</a></p>
+      <form method="post" role="form" class="{% if form.errors %} errorForm {% endif %}">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-error has-error">
+          <p class="control-label">
+            Please check
+            <span><img src='{% static "assets/images/warning.png" %}'/> marked fields</span>
+          </p>
+        </div>
+        {% endif %}
+        <div class="form-group {%if form.errors %}{% if form.errors.username %}control-error {%else%}control-success {%endif%}{%endif%}">
+          <label class="sr-only" for="inputName">Username</label>
+          <input type="text" class="form-control" id="inputName" name="username" placeholder="Your Username">
+          <div class="submit-result"></div>
+          <div class="error-result">{{form.errors.username}}<div class="arrow"></div></div>
+        </div>
+        <div class="form-group {%if form.errors %}{% if form.errors.email %}control-error {%else%}control-success {%endif%}{%endif%}">
+          <label class="sr-only" for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email address">
+          <div class="submit-result"></div>
+          <div class="error-result">{{form.errors.email}}<div class="arrow"></div></div>
+        </div>
+        <div class="form-group {%if form.errors %}{% if form.errors.password1 %}control-error {%else%}control-success {%endif%}{%endif%}">
+          <label class="sr-only" for="inputPassword">Password</label>
+          <input type="password" class="form-control" id="inputPassword" name="password1" placeholder="Password">
+          <div class="submit-result"></div>
+          <div class="error-result">{{form.errors.password1}}<div class="arrow"></div></div>
+        </div>
+        <div class="form-group {%if form.errors %}{% if form.errors.password2 %}control-error {%else%}control-success {%endif%}{%endif%}">
+          <label class="sr-only" for="inputPasswordCheck">Retype Password</label>
+          <input type="password" class="form-control" id="inputPasswordCheck" name="password2" placeholder="Confirm Password">
+          <div class="submit-result"></div>
+          <div class="error-result">{{form.errors.password2}}<div class="arrow"></div></div>
+        </div>
+        <div class="form-group clearfix margin-top-15 margin-bottom-25">
+          <div class="pull-left">
+            <input type="checkbox" id="inputCheckbox" class="js-switch" name="acceptTerm">
+            <label for="inputCheckbox">
+              I have read and accept <a href='/terms'>Terms of use</a> and cosent to the
+              <a href="/policy">Privacy Policy</a>.
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Sign Up</button>
+      </form>
+    </div>
+  </div>
+  {% include "main_footer.html" %}
+</div>
+{% endblock content %}
+
+{% block main_scripts %}
+<script type="text/javascript" src='{% static "assets/js/login_template.js" %}'></script>
+<script type="text/javascript" src='{% static "assets/js/register_form.js" %}'></script>
+{% endblock main_scripts %}

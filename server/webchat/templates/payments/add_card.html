@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Add / Edit Credit Card Information {% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/statistics.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small app-message{% endblock body_class %}
+
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+<!-- Page -->
+<div class="page animsition">
+  <div class="page-header">
+    <h1 class="page-title">Your Payment Setting</h1>
+  </div>
+  <div class="page-content container-fluid">
+    <div class="panel">
+      <div class="panel" id="exampleWizardFormContainer">
+        <div class="panel-heading">
+          <h3 class="panel-title">Edit Your Payment Setting</h3>
+        </div>
+        <div class="panel-body">
+          <div class="clearfix form-group">
+            <div class="card-wrapper pull-left" id="cardContainer"></div>
+          </div>
+          <form class="wizard-content" data-plugin="card" data-target="#cardContainer" action="" method="post">
+            {% csrf_token %}
+            <div class="wizard-pane" id="exampleBillingOne" role="tabpanel">
+              {% if user.card_last %}
+              <div class="form-group">
+                <label class="control-label" for="">Current Card</label>
+                <input type="text" class="form-control" readonly disabled value="{{ user.card_type }}
+                      XXXXXXXX{{ user.card_last|default:"" }}
+                      Exp {{ user.card_expiry }}">
+              </div>
+              {% endif %}
+              <div class="form-group">
+                <label class="control-label" for="id_card_number">Card Number</label>
+                <i style="color: red">{{ form.number.errors.as_text }}</i>
+                <input type="text" class="form-control has-error" value="{{ form.number.value|default:"" }}" name="number">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="id_fullname">Full Name</label>
+                <i style="color: red">{{ form.name.errors.as_text }}</i>
+                <input type="text" value="{{ form.name.value|default:"" }}" name="name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="">Card Expiry</label>
+                {{ form.expiration }}
+                <i style="color: red">{{ form.expiration.errors.as_text }}</i>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="id_cvc">CVC</label>
+                <i style="color: red">{{ form.cvc.errors.as_text }}</i>
+                <input type="text" value="{{ form.cvc.value|default:"" }}" name="cvc" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page -->
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}
+
+{% block main_scripts %}
+<script src='{% static "assets/js/app.js" %}'></script>
+<script src='{% static "global/vendor/clipboard/clipboard.min.js" %}'></script>
+<script src='{% static "global/vendor/card/jquery.card.min.js" %}'></script>
+<script src='{% static "global/js/components/card.js" %}'></script>
+<!-- Instantiate clipboard -->
+<script>
+  var clipboard = new Clipboard('.btn');
+</script>
+{% endblock main_scripts %}

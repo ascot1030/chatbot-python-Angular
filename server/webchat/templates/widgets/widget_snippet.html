@@ -1,0 +1,4 @@
+<script>
+  window.webchatConfig = {"token": "{{ widget.token }}", "widget_admin_url": "{{ widget_admin_url }}", "widget_root_url": "{{ widget_root_url }}"{% if widget.greeting_message %}, "message": {"greeting": " {{ widget.greeting_message }}"}{% endif %}}
+</script>
+<script type="text/javascript" src="{{ widget_root_url }}/assets/js/webchat-widget.min.js"></script>

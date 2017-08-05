@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Sign Out{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/login.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}page-login layout-full{% endblock body_class %}
+
+{% block content %}
+
+<div class="container">
+  {% include "main_header.html" %}
+  <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content vertical-align-middle">
+      <div class="brand">
+        <h2 class="brand-text">SIGN OUT</h2>
+      </div>
+      <p>Are you sure you want to sign out?</p>
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button type="submit" class="btn btn-success btn-block">Sign Out</button>
+      </form>
+    </div>
+  </div>
+  {% include "main_footer.html" %}
+</div>
+{% endblock content %}
+
+{% block main_scripts %}
+<script type="text/javascript" src='{% static "assets/js/login_template.js" %}'></script>
+{% endblock main_scripts %}

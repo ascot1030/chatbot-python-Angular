@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Users{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% load humanize %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/users.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small page-user{% endblock body_class %}
+
+
+{% block content %}
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+<!-- Page -->
+<div class="page animsition">
+  <div class="page-header">
+    <h1 class="page-title">Users</h1>
+  </div>
+  <div class="page-content container-fluid">
+    <!-- Panel -->
+    <div class="panel">
+      <div class="panel-body">
+        <div class="nav-tabs-horizontal">
+          <div class="dropdown page-user-sortlist">
+            Order By: <a class="dropdown-toggle inline-block" data-toggle="dropdown" href="#" aria-expanded="false">Last Active<span class="caret"></span></a>
+            <ul class="dropdown-menu animation-scale-up animation-top-right animation-duration-250" role="menu">
+              <li class="active" role="presentation"><a href="javascript:void(0)">Last Active</a></li>
+              <li role="presentation"><a href="javascript:void(0)">Username</a></li>
+              <li role="presentation"><a href="javascript:void(0)">Location</a></li>
+              <li role="presentation"><a href="javascript:void(0)">Register Date</a></li>
+            </ul>
+          </div>
+          <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
+            <li class="active" role="presentation"><a data-toggle="tab" href="#all_contacts" aria-controls="all_contacts" role="tab">All Contacts</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane animation-fade active" id="all_contacts" role="tabpanel">
+              <ul class="list-group">
+                {% for user in user_list %}
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <div class="avatar avatar-online">
+                        {% if user.avatar %}
+                        <img src='{{ user.avatar.url }}' alt="{{ user.get_full_name|default:user.username }}"> {% else %}
+                        <img src='{% static "global/portraits/default.jpg" %}' alt="No Avatar"> {% endif %}
+                        <i class="avatar avatar-busy"></i>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">
+                          <a href="{% url 'users:detail' user.username %}">{{ user.username }}</a>
+                          <small>{{ user.last_login|naturaltime }}</small>
+                      </h4>
+                      <p>
+                        <i class="icon icon-color wb-map" aria-hidden="true"></i> {{ user.location }}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Panel -->
+  </div>
+</div>
+<!-- End Page -->
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %} {% block main_scripts %}
+<script src='{% static "global/js/plugins/responsive-tabs.js" %}'></script>
+<script src='{% static "global/js/components/tabs.js" %}'></script>
+{% endblock main_scripts %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Chat Portal{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/portal.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}site-navbar-small app-message{% endblock body_class %}
+
+{% block content %}
+
+<input type="hidden" id="sessionkey" value='{{ request.session.session_key }}'>
+<input type="hidden" id="username" value='{{ request.user.username }}'>
+<input type="hidden" id="roomsUrl" value="{% url 'portal:rooms' %}">
+
+{% include "base_navbar.html" %}
+
+{% include "base_menubar.html" %}
+
+<div class="page animsition">
+  <!-- Message Sidebar -->
+  <div class="page-aside">
+    <div class="page-aside-switch">
+      <i class="icon wb-chevron-left" aria-hidden="true"></i>
+      <i class="icon wb-chevron-right" aria-hidden="true"></i>
+    </div>
+    <div class="page-aside-inner">
+      <div class="app-message-list" data-plugin="pageAsideScroll">
+        <div data-role="container">
+          <div data-role="content">
+            <ul class="list-group rooms">
+            {% include "portal/rooms_chat.html" %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="new-room clearfix" style="display: none;">
+        <button class="new-room-btn btn btn-floating btn-primary btn-sm" type="button"><i aria-hidden="true" class="icon wb-plus"></i></button>
+      </div>
+    </div>
+  </div>
+  <!-- End Message Sidebar -->
+  <div class="page-main">
+    <!-- Chat Box -->
+    <div class="app-message-chats">
+      <div class="chats">
+        {% include "portal/message_chat.html" %}
+      </div>
+    </div>
+    <!-- End Chat Box -->
+    <!-- Message Input-->
+    <form class="app-message-input">
+      <div class="message-input">
+        <textarea class="form-control" rows="1"></textarea>
+      </div>
+      <button class="message-input-btn btn btn-primary" type="button">SEND</button>
+    </form>
+    <!-- End Message Input-->
+  </div>
+</div>
+
+<!-- Footer -->
+{% include "base_footer.html" %}
+
+{% endblock content %}
+
+{% block main_scripts %}
+<script src='{% static "global/vendor/reconnecting-websocket/reconnecting-websocket.min.js" %}'></script>
+<script src='{% static "assets/js/app.js" %}'></script>
+<script src='{% static "assets/js/portal.js" %}'></script>
+{% if not rooms and request.user.show_widget_tip %}
+    <script>
+        $('#openTutorialModal').click();
+
+        $('#disable_widget_tip').on('click', function () {
+          $.get({% url 'portal:disable_widget_tip' %}, function( data ) {});
+        })
+    </script>
+{% endif %}
+{% endblock main_scripts %}
+
+
+
+

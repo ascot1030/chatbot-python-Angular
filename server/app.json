@@ -1,0 +1,64 @@
+{
+  "name": "webchat",
+  "scripts": {
+    "postdeploy": "python manage.py migrate"
+  },
+  "env": {
+    "WITAI_ACCESS_TOKEN": {
+      "required": true
+    },
+    "WITAI_BOT_NICKNAME": {
+      "required": false
+    },
+    "WIDGET_ADMIN_URL": {
+      "required": true
+    },
+    "WIDGET_ROOT_URL": {
+      "required": true
+    },
+    "STRIPE_API_KEY": {
+      "required": false
+    },
+    "DJANGO_SENDGRID_USERNAME": {
+      "required": true
+    },
+    "DJANGO_SENDGRID_PASSWORD": {
+      "required": true
+    },
+    "DJANGO_SENTRY_DSN": {
+      "required": true
+    },
+    "DJANGO_AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "DJANGO_AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "DJANGO_AWS_STORAGE_BUCKET_NAME": {
+      "required": true
+    },
+    "CELERY_BROKER_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1
+    },
+    "web": {
+      "quantity": 1
+    },
+    "celeryworker": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}

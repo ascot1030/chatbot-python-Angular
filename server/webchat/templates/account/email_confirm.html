@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Confirm E-mail Address{% endblock meta_title %}
+
+{% load staticfiles %}
+
+{% load account %}
+
+{% block main_style %}
+<link rel="stylesheet" href='{% static "assets/css/login.css" %}'>
+{% endblock main_style %}
+
+{% block body_class %}page-login layout-full{% endblock body_class %}
+
+{% block content %}
+
+<div class="container">
+  {% include "main_header.html" %}
+  <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content vertical-align-middle">
+      <h2>Confirm E-mail Address</h2>
+
+      {% if confirmation %}
+
+      {% user_display confirmation.email_address.user as user_display %}
+
+      <p>Please confirm that <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a><br> is an e-mail address for user {{ user_display }}.</p>
+
+      <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-block">Confirm</button>
+      </form>
+
+      {% else %}
+
+      {% url 'account_email' as email_url %}
+
+      <p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.</p>
+
+      {% endif %}
+
+    </div>
+  </div>
+  {% include "main_footer.html" %}
+</div>
+{% endblock content %}
+
+{% block main_scripts %}
+<script type="text/javascript" src='{% static "assets/js/login_template.js" %}'></script>
+{% endblock main_scripts %}
